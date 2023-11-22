@@ -1,24 +1,33 @@
-import pymysql
+import psycopg2 as psy
 
-# Replace these values with your actual database connection details
-host = '172.31.1.102'
-user = 'kuka'
-password = 'kuka'
-database = 'NavBaseDB'
-port = 5432  # Replace with the actual port number
+conn = psy.connect(
+    host = '127.0.0.1',
+    user = 'kuka',
+    password = 'kuka',
+    database = 'NavBaseDB',
+    port = 5432
+    )
 
-# Create a connection to the database
-connection = pymysql.connect(host=host, user=user, password=password, database=database, port=port)
+cur = conn.cursor()
+cur.execute("""
+    SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE table_catalog = 'NavBaseDB'
+    """)
+rows = cur.fetchall()
+for row in rows:
+    print(row)
 
-# Create a cursor object to interact with the database
-cursor = connection.cursor()
+for table_name in rows:
+    schema = table_name[1]
+    table_name = table_name[2]
+    
+    cur.execute(f"SELECT * FROM {schema}.{table_name}")
+    row1 = cur.fetchall()
+    print(f"Data from table {table_name}: {row1}")
 
-# Now you can execute SQL queries using the 'cursor' object
 
-# Example: Fetch all rows from a table named 'example_table'
-cursor.execute('SELECT * FROM example_table')
-rows = cursor.fetchall()
 
-# Don't forget to close the cursor and connection when you're done
-cursor.close()
-connection.close()
+
+
+conn.commit()
+cur.close()
+conn.close()
