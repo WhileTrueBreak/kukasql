@@ -3,14 +3,15 @@ from opcua.opcua import OpcuaContainer as OpContainer
 from opcua.opcuaReceiver import OpcuaReceiver as OpR
 from opcua.opcuaTransmitter import OpcuaTransmitter as OpT
 
-
-def fetchTable(cur, schema, table):
-    cur.execute(f"SELECT * FROM {schema}.{table}")
+def fetchTable(cur, loc):
+    cur.execute(f"SELECT * FROM {loc}")
     return cur.fetchall()
 
+def getTableColumns(cur, table_name):
+    cur.execute(f"SELECT column_name FROM information_schema.columns WHERE table_name = '{table_name}'")
+    return [column[0] for column in cur.fetchall()]
 
 def main():
-    
     conn = psy.connect(
         host = '118.138.154.172',
         user = 'kuka',
@@ -21,16 +22,17 @@ def main():
 
     cur = conn.cursor()
     cur.execute("""
-        SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE table_catalog = 'NavBaseDB'
+        SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE table_catalog = 'NavBaseDB_Nav_KMR_200_iiwa_14_R820_1'
         """)
     rows = cur.fetchall()
     for row in rows:
         print(row)
 
-    print(fetchTable(cur, 'localruntime', 'robotposition'))
-    print(fetchTable(cur, 'config', 'robotinstance'))
-    print(fetchTable(cur, 'environment', 'finelocalizationparams'))
-    print(fetchTable(cur, 'localruntime', 'robotgraphnode'))
+    print(fetchTable(cur, 'localruntime.robotposition'))
+    print(fetchTable(cur, 'config.robotinstance'))
+
+    cols = getTableColumns(cur, 'localruntime.robotposition')
+    print(cols)
 
     # for table_name in rows:
     #     schema = table_name[1]
