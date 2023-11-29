@@ -129,6 +129,8 @@ env.bak/
 venv.bak/
 
 #
+bin/
+lib64
 Scripts/
 pyvenv.cfg
 
