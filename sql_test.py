@@ -22,13 +22,13 @@ def main():
     for row in rows:
         print(row)
 
-    for table_name in rows:
-        schema = table_name[1]
-        table_name = table_name[2]
+    # for table_name in rows:
+    #     schema = table_name[1]
+    #     table_name = table_name[2]
 
-        cur.execute(f"SELECT * FROM {schema}.{table_name}")
-        row1 = cur.fetchall()
-        print(f"Data from table {table_name}: {row1}")
+    #     cur.execute(f"SELECT * FROM {schema}.{table_name}")
+    #     row1 = cur.fetchall()
+    #     print(f"Data from table {table_name}: {row1}")
 
 conn.commit()
 cur.close()
