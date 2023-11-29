@@ -27,6 +27,8 @@ def main():
     for row in rows:
         print(row)
 
+    print(fetchTable(cur, 'environment', 'finelocalizationparams'))
+    print(fetchTable(cur, 'localruntime', 'robotgraphnode'))
     print(fetchTable(cur, 'localruntime', 'robotposition'))
 
     # for table_name in rows:
