@@ -4,6 +4,11 @@ from opcua.opcuaReceiver import OpcuaReceiver as OpR
 from opcua.opcuaTransmitter import OpcuaTransmitter as OpT
 
 
+def fetchTable(cur, schema, table):
+    cur.execute(f"SELECT * FROM {schema}.{table}")
+    return cur.fetchall()
+
+
 def main():
     
     conn = psy.connect(
@@ -21,6 +26,8 @@ def main():
     rows = cur.fetchall()
     for row in rows:
         print(row)
+
+    print(fetchTable(cur, 'localruntime', 'robotposition'))
 
     # for table_name in rows:
     #     schema = table_name[1]
