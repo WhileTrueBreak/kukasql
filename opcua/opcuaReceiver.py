@@ -1,4 +1,4 @@
-from connections.opcua import *
+from opcua.opcua import *
 
 class OpcuaReceiver:
     def __init__(self, data, container, host):
