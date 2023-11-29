@@ -12,7 +12,7 @@ def fetchTable(cur, schema, table):
 def main():
     
     conn = psy.connect(
-        host = '127.0.0.1',
+        host = '118.138.154.172',
         user = 'kuka',
         password = 'kuka',
         database = 'NavBaseDB',
