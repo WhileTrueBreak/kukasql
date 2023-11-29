@@ -30,9 +30,9 @@ def main():
     #     row1 = cur.fetchall()
     #     print(f"Data from table {table_name}: {row1}")
 
-conn.commit()
-cur.close()
-conn.close()
+    conn.commit()
+    cur.close()
+    conn.close()
 
 if __name__ == '__main__':
     main()
